@@ -2,7 +2,7 @@ solution "glview"
    -- location ( "build" )
    configurations { "Debug", "Release" }
    platforms {"native", "x64", "x32"}
-   
+
    project "glview"
 
       kind "ConsoleApp"
@@ -17,10 +17,10 @@ solution "glview"
 
       configuration { "windows" }
          -- Edit path to glew and GLFW3 fit to your environment.
-         includedirs { "../../../../local/glew-1.13.0/include/" }
-         includedirs { "../../../../local/glfw-3.2.bin.WIN32/include/" }
-         libdirs { "../../../../local/glew-1.13.0/lib/Release/Win32/" }
-         libdirs { "../../../../local/glfw-3.2.bin.WIN32/lib-vc2013/" }
+         includedirs { "/Users/zemed/Desktop/glew-1.13.0-win32/glew-1.13.0/include/" }
+         includedirs { "/Users/zemed/Desktop/glfw-3.2/include/" }
+         libdirs { "/Users/zemed/Desktop/glew-1.13.0-win32/glew-1.13.0/lib/Release/Win32/" }
+         libdirs { "/Users/zemed/Desktop/glfw-3.2-win32/src/Release/" }
          links { "glfw3", "gdi32", "winmm", "user32", "glew32", "glu32","opengl32", "kernel32" }
          defines { "_CRT_SECURE_NO_WARNINGS" }
 
