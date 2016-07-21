@@ -20,7 +20,7 @@ solution "glview"
          includedirs { "/Users/zemed/Desktop/glew-1.13.0-win32/glew-1.13.0/include/" }
          includedirs { "/Users/zemed/GitHub/glfw/include/" }
          libdirs { "/Users/zemed/Desktop/glew-1.13.0-win32/glew-1.13.0/lib/Release/Win32/" }
-         libdirs { "/Users/zemed/Desktop/glfw-3.2-win32/src/Release/" }
+         libdirs { "/Users/zemed/Desktop/glfw-win32/src/Release/" }
          links { "glfw3", "gdi32", "winmm", "user32", "glew32", "glu32","opengl32", "kernel32" }
          defines { "_CRT_SECURE_NO_WARNINGS" }
 
