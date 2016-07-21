@@ -536,6 +536,61 @@ int main(int argc, char **argv) {
     }
   }
 
+
+  // set up GLSL programs defined in the loaded file:
+  for (std::map<std::string, tinygltf::Program>::const_iterator programs_it = scene.programs.cbegin(); programs_it != scene.programs.cend(); programs_it++) {
+	  GLchar *shader_src[1];
+	  GLint src_length;
+	  GLint compile_status;
+	  GLint link_status;
+
+	  // vertex shader:
+	  GLuint vshader_id = glCreateShader(GL_VERTEX_SHADER);
+	  tinygltf::Shader &vshader = scene.shaders[programs_it->second.vertexShader];
+	  shader_src[0] = (GLchar *)vshader.source.data();
+	  src_length = (GLint)vshader.source.size();
+	  glShaderSource(vshader_id, 1, shader_src, &src_length);
+	  glCompileShader(vshader_id);
+	  glGetShaderiv(vshader_id, GL_COMPILE_STATUS, &compile_status);
+	  if (compile_status != GL_TRUE) {
+		  std::cerr << "Failed to compile vertex shader " << programs_it->second.vertexShader << std::endl;
+		  exit(-1);
+	  }
+	  else {
+		  std::cout << "Compiled vertex shader " << programs_it->second.vertexShader << std::endl;
+	  }
+
+	  // fragment shader:
+	  GLuint fshader_id = glCreateShader(GL_FRAGMENT_SHADER);
+	  tinygltf::Shader &fshader = scene.shaders[programs_it->second.fragmentShader];
+	  shader_src[0] = (GLchar *)fshader.source.data();
+	  src_length = (GLint)fshader.source.size();
+	  glShaderSource(fshader_id, 1, shader_src, &src_length);
+	  glCompileShader(fshader_id);
+	  glGetShaderiv(fshader_id, GL_COMPILE_STATUS, &compile_status);
+	  if (compile_status != GL_TRUE) {
+		  std::cerr << "Failed to compile fragment shader " << programs_it->second.fragmentShader << std::endl;
+		  exit(-1);
+	  }
+	  else {
+		  std::cout << "Compiled fragment shader " << programs_it->second.fragmentShader << std::endl;
+	  }
+
+	  GLuint program_id = glCreateProgram();
+	  glAttachShader(program_id, vshader_id);
+	  glAttachShader(program_id, fshader_id);
+	  glLinkProgram(program_id);
+	  glGetProgramiv(program_id, GL_LINK_STATUS, &link_status);
+	  if (link_status != GL_TRUE) {
+		  std::cerr << "Failed to link GLSL program " << programs_it->first << std::endl;
+		  exit(-1);
+	  }
+	  else {
+		  std::cout << "Linked GLSL program " << programs_it->first << std::endl;
+	  }
+  }
+
+
   glUseProgram(progId);
   CheckErrors("useProgram");
 
